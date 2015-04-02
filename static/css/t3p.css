@@ -1,0 +1,84 @@
+#image-div300 {
+    background-image: url("../background.png");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 100% 170%;
+}
+
+#image-div200 {
+    background-image: url("../background.png");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 100% 155%;
+}
+
+#image-div100 {
+    background-image: url("../background.png");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 100% 140%;
+}
+
+.image-div300 {
+    background-image: url("../PROFILE_leer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 150%;
+    height: 600px;
+    text-align: center;
+}
+
+.image-div200 {
+    background-image: url("../PROFILE_leer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 122%;
+    height: 400px;
+    text-align: center;
+}
+
+.image-div100 {
+    background-image: url("../PROFILE_leer.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 106%;
+    height: 200px;
+    text-align: center;
+}
+
+.image-div300 img, .image-div200 img, .image-div100 img{
+    text-align:center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2px;
+    position: relative;
+    left: -50%;
+}
+
+.img20 {
+    height: 20px;
+    width: 20px;
+}
+
+.img40 {
+    height: 40px;
+    width: 20px;
+}
+
+.img60 {
+    height: 60px;
+    width: 20px;
+}
+
+.img160 {
+    height: 160px;
+    width: 20px;
+}
+
+.foobar {
+    position: absolute;
+    bottom: 0;
+    left: 46.5%;
+    max-height: 600px;
+}
