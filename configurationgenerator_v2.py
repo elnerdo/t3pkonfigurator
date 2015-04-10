@@ -19,11 +19,10 @@ class ConfigurationGenerator(object):
         self.totalspaceused = ''
         self.offset = ''
         self.parts = ''
-        self.amount = ''
-        self.cable = ''
-        self.connector = ''
 
     def create_configuration(self):
+        if not self.depths:
+            return self
         self.tube = self.calc_tube()
         self.spaces = self.calc_spaces()
         self.spacers = self.calc_spacers()
@@ -33,10 +32,12 @@ class ConfigurationGenerator(object):
         self.check_extra_spacers_bottom()
         conf = {'tube': self.tube, 'order': self.order, 'offset': self.offset,
                 'depths': self.depths, 'parts': self.parts}
-        return conf
+        return self
 
     def calc_tube(self):
         i = 0
+        if not len(self.depths):
+            return 0
         while int(max(self.depths)) + self.reserved_space <= self.tubelengths[i]:
             tube = self.tubelengths[i]
             if i == len(self.tubelengths) - 1:

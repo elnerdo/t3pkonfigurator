@@ -1,0 +1,14 @@
+<form class="form-horizontal" action="/t3pkonfigurator" method="post" name="additional_probe">
+  <div class="form-group">
+    <label class="col-md-3 col-xs-3" for="add_probe">Tiefster Messpunkt in cm</label>
+    <select class="col-md-3 col-xs-3" id="add_probe" name="add_probe" required>
+      <option value="">Bitte auswählen</option>
+      {% for x in range(265, 5, -5) %}
+        <option value="{{ x }}">{{ x }}cm</option>
+      {% end %}
+    </select>
+    <div class="col-md-2 col-xs-2">
+      <button id="add-btn" class="btn btn-primary">OK</button>
+    </div>
+  </div>
+</form>

@@ -1,49 +1,50 @@
-#image-div300 {
+#image-div300, #image-div200, #image-div100, #myCanvas{
     background-image: url("../background.png");
     background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: 100% 170%;
-}
-
-#image-div200 {
-    background-image: url("../background.png");
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: 100% 155%;
-}
-
-#image-div100 {
-    background-image: url("../background.png");
-    background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: 100% 140%;
+    background-position: 15% 100%;
+    background-size: 45em;
+    height: 900px;
+    border-radius: 50px;
+    border: 4px solid green;
 }
 
 .image-div300 {
     background-image: url("../PROFILE_leer.png");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 150%;
-    height: 600px;
+    background-position: center center;
+    background-size: 105% 100%;
+    height: 750px;
+    width: 100%;
     text-align: center;
+    position: absolute;
+    top: 12%;
+    left: 0;
 }
 
 .image-div200 {
     background-image: url("../PROFILE_leer.png");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 122%;
-    height: 400px;
+    background-position: center center;
+    background-size: 105% 66%;
+    height: 750px;
+    width: 100%;
     text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 0;
 }
 
 .image-div100 {
     background-image: url("../PROFILE_leer.png");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100% 106%;
-    height: 200px;
+    background-position: center center;
+    background-size: 105% 33%;
+    height: 750px;
+    width: 100%;
     text-align: center;
+    position: absolute;
+    top: -2%;
+    left: 0;
 }
 
 .image-div300 img, .image-div200 img, .image-div100 img{
@@ -57,28 +58,54 @@
 }
 
 .img20 {
-    height: 20px;
+    height: 18px;
     width: 20px;
 }
 
 .img40 {
-    height: 40px;
+    height: 36px;
     width: 20px;
 }
 
 .img60 {
-    height: 60px;
+    height: 54px;
     width: 20px;
 }
 
 .img160 {
-    height: 160px;
+    height: 144px;
     width: 20px;
 }
 
 .foobar {
     position: absolute;
-    bottom: 0;
-    left: 46.5%;
+    bottom: 7%;
+    left: 45.75%;
     max-height: 600px;
+}
+
+
+.foobar2 {
+    position: absolute;
+    bottom: 22%;
+    left: 45.75%;
+    max-height: 400px;
+}
+
+.foobar3 {
+    position: absolute;
+    bottom: 36%;
+    left: 45.75%;
+    max-height: 200px;
+}
+
+.depthlegend {
+    background: #ccc;
+    color: green;
+    margin-left: 0.5%;
+    padding: 0.5%;
+    font-weight: bold;
+    line-height: 0.05em;
+    border: 2px solid green;
+    border-radius: 10px;
 }
