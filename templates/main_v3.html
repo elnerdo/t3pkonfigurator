@@ -7,11 +7,11 @@
 <link rel="stylesheet" href="{{ static_url("css/bootstrap.css") }}" type="text/css" />
 <link rel="stylesheet" href="{{ static_url("css/t3p.css") }}" type="text/css" />
 </head>
-<body>
+<body onload="set_body_size()">
   <div class="container" id="container">
     <div class="row">
-      <div class="col-md-4 col-xs-4">
-          <canvas id="myCanvas" width="360px" height="900px">
+      <div class="col-md-4 col-xs-4" id="canvas-div">
+          <canvas id="myCanvas">
             Your browser does not support the HTML5 canvas tag.
           </canvas>
           {% raw img %}
@@ -25,10 +25,13 @@
           {% end %}
         </div>
         <div id="summary-div">
-          {% if data.depths %}
+          {% if data.depths and not data.finished %}
+          Ihre Messpunkte mit dem Tiefsten beginnend:<br>
+            <ol>
             {% for depth in data.depths %}
-                {{ depth }}
+                <li>{{ depth }}cm</li>
             {% end %}
+            </ol>
           {% end %}
         </div>
         <div id="additional-data-div">
@@ -36,16 +39,19 @@
             {% include "probes_done.html" %}
           {% end %}
         </div>
-        <div id="msg-div" class="alert alert-success"></div>
+        <div id="msg-div" class="alert alert-success">{{ msg }}</div>
       </div>
     </div>
   </div>
   <div id="cheating" style="display:none;">
-    <img id="img-probe" src="/t3pkonfigurator/static/probe.png">
-    <img id="img-spacer10" src="/t3pkonfigurator/static/spacer10.png">
-    <img id="img-spacer30" src="/t3pkonfigurator/static/spacer30.png">
-    <img id="img-spacer80" src="/t3pkonfigurator/static/spacer80.png">
-    <img id="tubeimg" src="/t3pkonfigurator/static/PROFILE_leer.png">
+    <img height="20" id="img-probe" src="/t3pkonfigurator/static/probe.png">
+    <img height="10" id="img-spacer10" src="/t3pkonfigurator/static/spacer10.png">
+    <img height="30" id="img-spacer30" src="/t3pkonfigurator/static/spacer30.png">
+    <img height="80" id="img-spacer80" src="/t3pkonfigurator/static/spacer80.png">
+    <img id="tubeimg-bottom" src="/t3pkonfigurator/static/PROFILE_bottom.png">
+    <img id="tubeimg-top" src="/t3pkonfigurator/static/PROFILE_top.png">
+    <img id="tubeimg-100" src="/t3pkonfigurator/static/PROFILE_leer_100.png">
+    <img id="background" src="/t3pkonfigurator/static/background.png">
   </div>
 </body>
 </html>

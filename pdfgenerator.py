@@ -110,7 +110,6 @@ guration:'
          'spacer10': u'Platzhalter 10cm',
          'spacer30': u'Platzhalter 30cm',
          'spacer80': u'Platzhalter 80cm'}
-
         for i in sorted(self.parts):
             text = '{0} x {1}'.format(self.parts[i], partsdict[i])
             canvas.drawString(self.center_indented, self.y, text)

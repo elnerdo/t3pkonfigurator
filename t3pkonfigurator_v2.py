@@ -36,20 +36,31 @@ class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         data = T3PKonfigurator(self.request_dict)
+        ib = ImageBuilder()
+        ib.set_background()
+        img = ib.build()
         self.render('templates/main_v3.html',
                     msg=self.messages.initial_message,
-                    data=data, img='')
+                    data=data, img=img)
 
     def post(self):
+        print self.request_dict
         data = T3PKonfigurator(self.request_dict)
         data.create_configuration()
-
+        print data.configuration.parts
         conf = {'tube': data.configuration.tube,
                 'depths': data.configuration.depths,
                 'order': data.configuration.order}
 
-        ib = ImageBuilder(conf)
-        img = ib.build_canvas()#build_image()
+        ib = ImageBuilder()
+        ib.set_background()
+        if conf['depths']:
+            ib.set_tube(conf['tube'])
+            ib.set_elements(conf['order'], conf['tube'], conf['depths'])
+        img = ib.build()
+
+        if self.request_dict['probes_done']:
+            data.probes_done = True
 
         if self.request_dict['create_pdf']:
             data.create_configuration()
@@ -59,7 +70,21 @@ class MainHandler(tornado.web.RequestHandler):
                 self.set_header("Content-Type", 'application/pdf; charset="utf-8"')
                 self.set_header("Content-Disposition", "attachment; filename=" + pdf)
             os.remove(pdf)
-        self.render('templates/main_v3.html', msg=None, data=data, img=img)
+
+        msg = self.set_message(data)
+
+        self.render('templates/main_v3.html', msg=msg, data=data, img=img)
+
+    def set_message(self, data):
+        if self.request_dict['add_probe'] or self.request_dict['rm_probe']:
+            if data.possible_depths:
+                return self.messages.add_probe_message
+            elif not data.possible_depths and not data.depths:
+                return self.messages.initial_message
+            else:
+                return self.messages.max_elements_message
+        else:
+            return self.messages.finish
 
 
 class T3PKonfigurator(object):
@@ -80,6 +105,8 @@ class T3PKonfigurator(object):
         self.amount = data['amount']
         self.cable = data['cable']
         self.connector = data['connector']
+        self.probes_done = False
+
 
     def finish(self, data):
         if data['probes_done']:          

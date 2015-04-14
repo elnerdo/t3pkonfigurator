@@ -7,33 +7,34 @@
     <link rel="stylesheet" href="{{ static_url("css/bootstrap.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ static_url("css/t3p.css") }}" type="text/css" />
   </head>
-  <body>
-    <div class="container-fluid" id="container">
+<body>
+  <div class="container" id="container">
+    <div class="row">
+      <div class="col-md-4 col-xs-4" id="canvas-div">
+          <canvas id="myCanvas">
+            Your browser does not support the HTML5 canvas tag.
+          </canvas>
+<script>
+set_background();set_tubehead();set_tube(300);set_elements(['probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe', 'probe'], 300);
+</script>
 
-
-
-<div class="row">
-
-<div class="col-md-4" id="image-div">
-<div id="image-div300"><div class="image-div300"><div class="foobar"><img depth="25" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="45" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="65" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="85" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="105" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="125" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="145" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="165" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="185" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="205" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="225" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="245" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="265" class="img40" src="/t3pkonfigurator/static/probe.png"></div></div></div>
-</div>
-
-
-
-<div class="col-md-4" id="image-div2">
-<div id="image-div200"><div class="image-div200"><div class="foobar2"><img depth="15" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="35" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="55" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="75" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="95" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="115" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="135" class="img40" src="/t3pkonfigurator/static/probe.png"><img class="img60" width="20px" src="/t3pkonfigurator/static/spacer30.png"></div></div></div>
-</div>
-
-
-
-<div class="col-md-4" id="image-div3">
-<div id="image-div100"><div class="image-div100"><div class="foobar3"><img depth="25" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="45" class="img40" src="/t3pkonfigurator/static/probe.png"><img depth="65" class="img40" src="/t3pkonfigurator/static/probe.png"></div></div></div>
-</div>
-
-</div>
+      </div>
 
 
     </div>
-  </body>
+    <div id="cheating" >
+    <img height="20" id="img-probe" src="/t3pkonfigurator/static/probe.png">
+    <img height="10" id="img-spacer10" src="/t3pkonfigurator/static/spacer10.png">
+    <img height="30" id="img-spacer30" src="/t3pkonfigurator/static/spacer30.png">
+    <img height="80" id="img-spacer80" src="/t3pkonfigurator/static/spacer80.png">
+    <img id="tubeimg-bottom" src="/t3pkonfigurator/static/PROFILE_bottom.png">
+    <img id="tubeimg-top" src="/t3pkonfigurator/static/PROFILE_top.png">
+    <img id="tubeimg-100" src="/t3pkonfigurator/static/PROFILE_leer_100.png">
+    <img id="tubeimg-200" src="/t3pkonfigurator/static/PROFILE_leer_200.png">
+    <img id="tubeimg-300" src="/t3pkonfigurator/static/PROFILE_leer_300.png">
+    <img id="background" src="/t3pkonfigurator/static/background.png">
+    </div>
+  </div>
+</body>
 </html>
 

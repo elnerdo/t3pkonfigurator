@@ -1,17 +1,19 @@
 <form method="post" action="/t3pkonfigurator">
-Ihre Messpunkte mit dem Tiefsten beginnend:<br>
-<ol>
-{% for x in data.depths %}
-  <li>{{ x }}cm</li>
-{% end %}
-</ol>
-</div>
+  Ihre Messpunkte mit dem Tiefsten beginnend:<br>
+  <ol>
+    {% for x in data.depths %}
+      <li>{{ x }}cm</li>
+    {% end %}
+  </ol>
+
 <div id="tube">Sie brauchen ein {{ data.configuration.tube }}cm Rohr</div>
 <div id="offset">Bodenabstand: {{ data.configuration.offset }}cm</div><br>
 <p>Verbaute Teile:</p>
+<ul>
 {% for part in data.configuration.parts %}
-  {{ part }}
+   </li>{{ data.configuration.parts[part] }}x {{ part }}</li><br>
 {% end %}
+</ul>
 <div class="form-group">
 <label for="connector">Anschluss: </label>
 <select id="connector" name="connector" required>
@@ -43,6 +45,6 @@ Ihre Messpunkte mit dem Tiefsten beginnend:<br>
 <input type="hidden" name="offset" value="{{ data.configuration.offset }}">
 <input type="hidden" name="summary" value="{{ data.configuration.depths }}">
 <input type="hidden" name="configuration" value="{{ data.configuration.order }}">
-<input type="submit" value="Weiter">
+<input type="submit" class="btn btn-success" value="Weiter">
 </div>
 </form>

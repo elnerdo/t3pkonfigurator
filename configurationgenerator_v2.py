@@ -26,10 +26,10 @@ class ConfigurationGenerator(object):
         self.tube = self.calc_tube()
         self.spaces = self.calc_spaces()
         self.spacers = self.calc_spacers()
-        self.order = self.calc_order()
-        self.parts = self.calc_parts()
+        self.order = self.calc_order()       
         self.totalspaceused = self.calc_total_space_used()
         self.check_extra_spacers_bottom()
+        self.parts = self.calc_parts()
         conf = {'tube': self.tube, 'order': self.order, 'offset': self.offset,
                 'depths': self.depths, 'parts': self.parts}
         return self
