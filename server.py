@@ -25,6 +25,6 @@ if __name__ == "__main__":
     ], **settings)
 
     tornado.options.parse_command_line()
-    logging.info("Starting Server at: http://127.0.0.1:8888/t3pkonfigurator")
-    application.listen(8888)
+    logging.info("Starting Server at: http://127.0.0.1:80/t3pkonfigurator")
+    application.listen(80)
     tornado.ioloop.IOLoop.instance().start()
