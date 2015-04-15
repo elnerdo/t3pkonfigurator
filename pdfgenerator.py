@@ -12,16 +12,14 @@ from reportlab.lib.units import cm
 class PDFGenerator(object):
 
     def __init__(self, data):
-
-        #self.configuration = data['configuration']
-        self.configuration = [x.replace(' ', '') for x in data['configuration']]
-        self.tube = data['tube']
-        self.offset = data['offset']
-        self.summary = sorted(data['summary'], key=lambda x: (len(x), x[0], x[1], x[2]))
-        self.cable = data['cable']
-        self.connector = data['connector']
-        self.parts = data['parts']
-        self.amount = data['amount']
+        self.configuration = data.order
+        self.tube = data.tube
+        self.offset = data.offset
+        self.summary = sorted(data.depths, key=lambda x: x)#(len(x), x[0], x[1], x[2]))
+        self.cable = data.cable
+        self.connector = data.connector
+        self.parts = data.parts
+        self.amount = data.amount
         self.filename = 't3p-config-' + str(time.clock()) + '.pdf'
         self.font = "Helvetica"
         self.font_bold = "Helvetica-Bold"
@@ -91,12 +89,12 @@ guration:'
         self.y -= 10
 
     def draw_tube(self, canvas):
-        text = u'Rohrlänge: ' + self.tube + 'cm'
+        text = u'Rohrlänge: ' + str(self.tube) + 'cm'
         canvas.drawString(self.center, self.y, text)
         self.y -= self.y_decrease
 
     def draw_offset(self, canvas):
-        text = u'Rohrüberstand: ' + self.offset + 'cm'
+        text = u'Rohrüberstand: ' + str(self.offset) + 'cm'
         canvas.drawString(self.center, self.y, text)
         self.y -= self.y_decrease
 
@@ -108,11 +106,10 @@ guration:'
     def draw_parts(self, canvas):
         canvas.drawString(self.center, self.y, 'Verbaute Teile:')
         self.y -= self.y_decrease
-        partsdict = {u"'probe'": u'PICO-T3P',
-         u"'spacer10'": u'Platzhalter 10cm',
-         u"'spacer30'": u'Platzhalter 30cm',
-         u"'spacer80'": u'Platzhalter 80cm'}
-
+        partsdict = {'probe': u'PICO-T3P',
+         'spacer10': u'Platzhalter 10cm',
+         'spacer30': u'Platzhalter 30cm',
+         'spacer80': u'Platzhalter 80cm'}
         for i in sorted(self.parts):
             text = '{0} x {1}'.format(self.parts[i], partsdict[i])
             canvas.drawString(self.center_indented, self.y, text)
@@ -133,17 +130,17 @@ guration:'
 
     def draw_image_dummy(self, canvas):
         imagedict = {
-            u"'probe'": {'image': 'static/probe.png', 'displayheight': 40, 'height': 20},
-            u"'spacer10'": {'image': 'static/spacer10.png', 'displayheight': 20, 'height': 10},
-            u"'spacer30'": {'image': 'static/spacer30.png', 'displayheight': 60, 'height': 30},
-            u"'spacer80'": {'image': 'static/spacer80.png', 'displayheight': 160, 'height': 80}
+            'probe': {'image': 'static/probe.png', 'displayheight': 40, 'height': 20},
+            'spacer10': {'image': 'static/spacer10.png', 'displayheight': 20, 'height': 10},
+            'spacer30': {'image': 'static/spacer30.png', 'displayheight': 60, 'height': 30},
+            'spacer80': {'image': 'static/spacer80.png', 'displayheight': 160, 'height': 80}
         }
 
         canvas.drawImage('static/empty.png', self.left, 752, width=20, height=40)
         self.add_length_legend(canvas, 752, self.offset)
         canvas.drawImage('static/empty.png', self.left, 710, width=20, height=40)
-        if (int(self.summary[0][:-2])) - 10 > 0:
-            self.add_length_legend(canvas, 710 + (40/3), str(int(self.summary[0][:-2])-10))
+        if (int(self.summary[0])) - 10 > 0:
+            self.add_length_legend(canvas, 710 + (40/3), str(int(self.summary[0])-10))
             y = 710
         else:
             y = 750

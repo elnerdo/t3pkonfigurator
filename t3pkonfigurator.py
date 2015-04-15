@@ -30,13 +30,14 @@ class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         fb = FormBuilder()
-        html = fb.build_deepest() 
-        self.render('templates/main_v2.html',
+        html = fb.build_deepest()
+        data = {}
+        data['depths'] = []
+        self.render('templates/main_v3.html',
                     msg=self.messages.initial_message,
-                    html=html)
+                    html=html, data=data)
 
     def post(self):
-
         html = ''
         t3p = T3PKonfigurator(self.request_dict)
         data = t3p.handle_request()

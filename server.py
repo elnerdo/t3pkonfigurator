@@ -6,7 +6,9 @@ import logging
 import tornado.ioloop
 import tornado.web
 import tornado.options
-from t3pkonfigurator import MainHandler
+from t3pkonfigurator_v2 import MainHandler, TestHandler
+
+__version__ = '0.1.0'
 
 if __name__ == "__main__":
 
@@ -19,9 +21,10 @@ if __name__ == "__main__":
 
     application = tornado.web.Application([
         (r"/t3pkonfigurator", MainHandler),
+        (r"/test", TestHandler)
     ], **settings)
 
     tornado.options.parse_command_line()
-    logging.info("Starting Server at: http://127.0.0.1:8181")
-    application.listen(8181)
+    logging.info("Starting Server at: http://127.0.0.1:8888/t3pkonfigurator")
+    application.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
