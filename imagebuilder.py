@@ -3,51 +3,41 @@
 
 class ImageBuilder(object):
 
-    def __init__(self, configuration):
-        self.configuration = configuration
+    def __init__(self):
         self.image_probe = '<img depth="{0}" class="img40" src="/t3pkonfigurator/static/probe.png">'
         self.image_spacer10 = '<img class="img20" width="20px"src="/t3pkonfigurator/static/spacer10.png">'
         self.image_spacer30 = '<img class="img60" width="20px" src="/t3pkonfigurator/static/spacer30.png">'
         self.image_spacer80 = '<img class="img160" width="20px"src="/t3pkonfigurator/static/spacer80.png">'
-        self.css_class = self._set_class()
+        self.canvas_actions = ''
 
-    def build_imageWORKING(self):
-        img_div = '<div class="{0}">{1}</div>'
-        imagedict = {
-            'probe': self.image_probe, 
-            'spacer10': self.image_spacer10,
-            'spacer30': self.image_spacer30,
-            'spacer80': self.image_spacer80
-        }
-        images = '<div class="foobar">'
-        for i in reversed(self.configuration['order']):
-            images += imagedict[i]
-        return img_div.format(self.css_class, images) + '</div>'
+    def build(self):
+        return "<script>$('#background').ready(function(){" + self.canvas_actions + "});</script>"
 
-    def build_image(self):
-        img_div = '<div id="{0}"><div class="{0}">{1}</div></div>'
-        imagedict = {
-            'probe': self.image_probe, 
-            'spacer10': self.image_spacer10,
-            'spacer30': self.image_spacer30,
-            'spacer80': self.image_spacer80
-        }
-        counter = len(self.configuration['depths']) - 1
-        images = '<div class="foobar">'
-        for i in reversed(self.configuration['order']):
-            if i == 'probe':
-                images += imagedict[i].format(self.configuration['depths'][counter])
-                counter -= 1
-            else:
-                images += imagedict[i]
-        images += '</div>'
-        img = img_div.format(self.css_class, images)
-        return img
+    def set_background(self):
+        self.canvas_actions += "set_background();"
 
-    def _set_class(self):
+    def set_tube(self, tube):
+        self.canvas_actions += "set_tubehead();set_tube({0});".format(tube)
+
+    def set_elements(self, elements, tube, depths):
+        self.canvas_actions += "set_elements({0}, {1}, {2});".format(elements, tube, depths)
+
+    def build_canvas(self, configuration):
+        self.configuration = configuration
         imagedict = {
-            300: 'image-div300',
-            200: 'image-div200',
-            100: 'image-div100'
+            'probe': ['16', '40'],
+            'spacer10': ['16', '20'],
+            'spacer30': ['16', '60'],
+            'spacer80': ['16', '160']
         }
-        return imagedict[self.configuration['tube']]
+
+        #js = self.set_background()
+        js = self.draw_tube()
+
+        return js
+
+
+    def draw_element(self, index, id, x, y, width, height):
+        js = 'var img{index} = document.getElementById("img-{id}");\
+ctx.drawImage(img{index}, {x}, {y}, {width}, {height});'
+        return js.format(index=index, id=id, x=x, y=y, width=width, height=height)

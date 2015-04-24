@@ -1,14 +1,68 @@
+function check_form(requiredValues) {
+    for (i=0; i < requiredValues.length; i++) {
+        var foo = $(requiredValues[i])[0];
+        if (foo.value === '') {
+            event.preventDefault();
+            $(foo).addClass('missing-required');
+        }        
+    }
+    return;
+}
+
+function submit_form(form) {
+    var inputs = $(form + ' :input');
+    var valid = true;
+    var valid_pattern = true;
+    event.preventDefault();
+    for (var i=0; i < inputs.length; i++) {
+        if (inputs[i].id == 'add-btn') {
+            continue;
+        }
+        if (inputs[i].value === '') {
+            $(inputs[i]).addClass('missing-required');
+            
+            valid = false;
+        }
+        else {
+            if (inputs[i].pattern) {
+                valid_pattern = check_pattern(inputs[i]);
+            }
+            else {
+                $(inputs[i]).removeClass('missing-required');
+            }
+        }
+    }
+    if (valid && valid_pattern) {
+        $(form).submit();
+    }
+    return;
+}
+
+function check_pattern(input) {
+    var pattern = /^[0-9]+$/;
+    var matched = pattern.test(input.value);
+    if (matched) {
+        $(input).removeClass('missing-required');
+        return true;
+    }
+
+    $(input).addClass('missing-required');
+    return false
+}
+
 function set_body_size() {
     var h = $(window).height();
-    $('body').css('height', h);
+    $('body').css('min-height', h);
 }
 
 function set_background() {
-    var w = $('#canvas-div').width() * 0.8;
+    var w = $('#canvas-div').width();
     var h = $(window).height() * 0.8;
     $('#myCanvas').attr('width', w);
-    $('#myCanvas').attr('height', h);  
-    setTimeout(draw_background, 100);
+    $('#myCanvas').attr('height', h);
+    var h2 = h + 8;
+    $('#data-div').css('min-height', h2 + 'px');
+    draw_background();
 }
 
 function draw_background() {
@@ -29,9 +83,9 @@ function set_background_height() {
 }
 
 function set_elements(elements, tube, depths) {
-    setTimeout( function() {
-        draw_elements(elements, tube, depths)
-    }, 100)   
+    $('#img-probe, #img-spacer10, #img-spacer30, #img-spacer80').ready(function() {
+        draw_elements(elements, tube, depths);
+    });
 }
 
 function draw_elements(elements, tube, depths) {
@@ -46,18 +100,19 @@ function draw_elements(elements, tube, depths) {
         ctx.drawImage(element, set_offset_x() + 5, offset, 20, height);
         if (elements[x] == 'probe') {
             ctx.fillStyle="#eee";
-            ctx.fillRect(set_offset_x() + 50, offset + 5, 50, 20);
+            ctx.fillRect(set_offset_x() - 50, offset + 5, 50, 20);
             ctx.fillStyle="green";
-            console.log(ctx.font);
             ctx.font = '12pt sans-serif';
-            ctx.fillText(depths[counter], set_offset_x() + 60, offset + 20);
+            ctx.fillText(depths[counter], set_offset_x() - 40, offset + 20);
             counter += 1;
         }
     }
 }
 
 function set_tubehead() {
-    setTimeout(draw_tubehead, 100);
+    $('#tubeimg-top').ready(function() {
+        draw_tubehead();
+    });
 }
 
 function draw_tubehead() {
@@ -68,9 +123,9 @@ function draw_tubehead() {
 }
 
 function set_tube(tubelen) {
-    setTimeout( function() {
-        draw_tube(tubelen)
-    }, 100)
+    $('#tubeimg-100').ready(function() {
+        draw_tube(tubelen);
+    });
 }
 
 function draw_tube(tubelen) {
@@ -119,4 +174,9 @@ function set_width() {
 
 function set_tube_height() {
     return $('#myCanvas').height() * 1/6;
+}
+
+function help_msg() {
+    $('#pdf_msg').text('PDF erstellt.');
+    $('#pdf_msg').css('visibility', 'visible');
 }

@@ -5,9 +5,69 @@
 
 
 #container {
-    padding: 2%;
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 body {
-   background: linear-gradient(#eee, #547491) no-repeat;
+    background: linear-gradient(#eee, #547491) no-repeat;
+}
+
+input[type=text], select {
+    color: #547491 !important;
+}
+
+label {
+    text-align: left !important;
+}
+
+#additional-data-div, #summary-div, #control-div {
+    font-weight: bold;
+    color: #547491;
+}
+
+#control-div {
+    background-color: rgba(238,238,238,0.5) !important;
+}
+
+#msg-div {
+   background-color: rgba(223, 240, 216, 0.5);
+    margin-top: 2%;
+}
+
+#data-div {
+    border-radius: 5%;
+    border: 4px solid green;
+}
+
+#data-div::after {
+    /* this ain't good yet... */
+    background-image: url('/t3pkonfigurator/static/IMKO_impuls.png');
+    background-color: rgb(0, 106, 179);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    content: "";
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+    border-radius: 4%; 
+}
+
+#too-small {
+    background-color: #eee;
+    padding: 5%;
+    border-radius: 10%;
+    border: 4px solid green;
+}
+
+.missing-required {
+    border: solid red 2px;
 }
