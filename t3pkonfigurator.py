@@ -38,7 +38,13 @@ class MainHandler(tornado.web.RequestHandler):
 
     def get(self):
         data = T3PKonfigurator(self.request_dict)
-        img = ''
+        data.create_configuration()
+        conf = {'tube': data.configuration.tube,
+                'depths': data.configuration.depths,
+                'order': data.configuration.order}
+        ib = ImageBuilder()
+        img = ib.build(conf['order'], conf['tube'], conf['depths'])
+        
         self.render(self.templates[self.lang],
                     msg=self.messages.initial_message,
                     data=data, img=img)
@@ -47,17 +53,12 @@ class MainHandler(tornado.web.RequestHandler):
         print self.request_dict
         data = T3PKonfigurator(self.request_dict)
         data.create_configuration()
-        print data.configuration.parts
         conf = {'tube': data.configuration.tube,
                 'depths': data.configuration.depths,
                 'order': data.configuration.order}
 
         ib = ImageBuilder()
-        ib.set_background()
-        if conf['depths']:
-            ib.set_tube(conf['tube'])
-            ib.set_elements(conf['order'], conf['tube'], conf['depths'])
-        img = ib.build()
+        img = ib.build(conf['order'], conf['tube'], conf['depths'])
 
         if self.request_dict['probes_done']:
             data.probes_done = True
