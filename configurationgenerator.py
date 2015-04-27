@@ -14,7 +14,7 @@ class ConfigurationGenerator(object):
         self.spacerlengths = t3p.spacerlengths
         self.spaces = []
         self.spacers = []
-        self.tube = ''
+        self.tube = 0
         self.order = []
         self.totalspaceused = ''
         self.offset = ''
