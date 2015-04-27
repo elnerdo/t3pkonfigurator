@@ -55,21 +55,103 @@ function set_body_size() {
     $('body').css('min-height', h);
 }
 
-function set_background() {
+function loadImages(sources, callback) {
+        var images = {};
+        var loadedImages = 0;
+        var numImages = 0;
+        // get num of sources
+        for(var src in sources) {
+          numImages++;
+        }
+        for(var src in sources) {
+          images[src] = new Image();
+          images[src].onload = function() {
+            if(++loadedImages >= numImages) {
+              callback(images);
+            }
+          };
+          images[src].src = sources[src];
+        }
+}
+
+function draw_canvas(elements, tube, depths) {
+    set_background_size();
+    var c = document.getElementById('myCanvas');
+    var ctx = c.getContext("2d");
+    var sources = {
+        background: '/t3pkonfigurator/static/background.png',
+        top: '/t3pkonfigurator/static/PROFILE_top.png',
+        tube: '/t3pkonfigurator/static/PROFILE_leer_100.png',
+        bottom: '/t3pkonfigurator/static/PROFILE_bottom.png',
+        probe: '/t3pkonfigurator/static/probe.png',
+        spacer10: '/t3pkonfigurator/static/spacer10.png',
+        spacer30: '/t3pkonfigurator/static/spacer30.png',
+        spacer80: '/t3pkonfigurator/static/spacer80.png'
+    } 
+        
+    if (depths.length > 0) {
+        loadImages(sources, function(images) {
+            ctx.drawImage(images.background, 0, 0, set_background_width(), set_background_height());
+            ctx.drawImage(images.top, set_offset_x(), set_tubehead_offset_y(), set_width(), 75);
+
+            var runs = tube / 100;
+            for (x=1;x<=runs;x++) {
+                ctx.drawImage(images.tube, set_offset_x(), set_tube_offset_y(x), set_width(), set_tube_height());
+                }
+            ctx.drawImage(images.bottom, set_offset_x(), set_tube_offset_y(runs+1), set_width(), 75);
+
+
+            var offset = set_tube_offset_y((tube/100) + 1) + 25;
+            var counter = 0
+            for(x=0;x<elements.length;x++) {
+
+                switch (elements[x]) {
+                    case 'probe':
+                        element = images.probe;
+                        height  = 20 * 1/6 * $('#myCanvas').height() / 100;
+                        break;
+                    case 'spacer10':
+                        element = images.spacer10;
+                        height  = 10 * 1/6 * $('#myCanvas').height() / 100;
+                        break;
+                    case 'spacer30':
+                        element = images.spacer30;
+                        height  = 30 * 1/6 * $('#myCanvas').height() / 100;
+                        break;
+                    case 'spacer80':
+                        element = images.spacer80;
+                        height  = 80 * 1/6 * $('#myCanvas').height() / 100;
+                        break;
+                }
+
+
+                offset = offset - height - 2;
+                ctx.drawImage(element, set_offset_x() + 5, offset, 20, height);
+                if (elements[x] == 'probe') {
+                    ctx.fillStyle="#eee";
+                    ctx.fillRect(set_offset_x() - 50, offset + 5, 50, 20);
+                    ctx.fillStyle="green";
+                    ctx.font = '12pt sans-serif';
+                    ctx.fillText(depths[counter], set_offset_x() - 40, offset + 20);
+                    counter += 1;
+                }
+            }
+        });
+    }
+    else {
+        loadImages(sources, function(images) {
+            ctx.drawImage(images.background, 0, 0, set_background_width(), set_background_height());
+        });
+    }
+}
+
+function set_background_size() {
     var w = $('#canvas-div').width();
     var h = $(window).height() * 0.8;
     $('#myCanvas').attr('width', w);
     $('#myCanvas').attr('height', h);
     var h2 = h + 8;
     $('#data-div').css('min-height', h2 + 'px');
-    draw_background();
-}
-
-function draw_background() {
-    var c = document.getElementById('myCanvas');
-    var ctx = c.getContext("2d");
-    var background = document.getElementById("background");
-    ctx.drawImage(background, 0, 0, set_background_width(), set_background_height());
 }
 
 function set_background_width() {
@@ -80,64 +162,6 @@ function set_background_width() {
 function set_background_height() {
     var h = $('#myCanvas').height();
     return h;
-}
-
-function set_elements(elements, tube, depths) {
-    $('#img-probe, #img-spacer10, #img-spacer30, #img-spacer80').ready(function() {
-        draw_elements(elements, tube, depths);
-    });
-}
-
-function draw_elements(elements, tube, depths) {
-    var c = document.getElementById('myCanvas');
-    var ctx = c.getContext("2d");
-    var offset = set_tube_offset_y((tube/100) + 1) + 25;
-    var counter = 0
-    for(x=0;x<elements.length;x++) {
-        var element = document.getElementById("img-" + elements[x]);
-        height = $(element).attr('height') * 1/6 * $('#myCanvas').height() / 100;
-        offset = offset - height - 2;
-        ctx.drawImage(element, set_offset_x() + 5, offset, 20, height);
-        if (elements[x] == 'probe') {
-            ctx.fillStyle="#eee";
-            ctx.fillRect(set_offset_x() - 50, offset + 5, 50, 20);
-            ctx.fillStyle="green";
-            ctx.font = '12pt sans-serif';
-            ctx.fillText(depths[counter], set_offset_x() - 40, offset + 20);
-            counter += 1;
-        }
-    }
-}
-
-function set_tubehead() {
-    $('#tubeimg-top').ready(function() {
-        draw_tubehead();
-    });
-}
-
-function draw_tubehead() {
-    var c = document.getElementById('myCanvas');
-    var ctx = c.getContext("2d");
-    var tubehead = document.getElementById('tubeimg-top');
-    ctx.drawImage(tubehead, set_offset_x(), set_tubehead_offset_y(), set_width(), 75);
-}
-
-function set_tube(tubelen) {
-    $('#tubeimg-100').ready(function() {
-        draw_tube(tubelen);
-    });
-}
-
-function draw_tube(tubelen) {
-    var c = document.getElementById('myCanvas');
-    var ctx = c.getContext("2d");
-    var tube = document.getElementById('tubeimg-100');
-    var runs = tubelen / 100;
-    for (x=1;x<=runs;x++) {
-        ctx.drawImage(tube, set_offset_x(), set_tube_offset_y(x), set_width(), set_tube_height());
-    }
-    var tubeend = document.getElementById('tubeimg-bottom');
-    ctx.drawImage(tubeend, set_offset_x(), set_tube_offset_y(runs+1), set_width(), 75);
 }
 
 function set_tubehead_offset_y() {
