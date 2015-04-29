@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta id="viewport" name="viewport" content="initial-scale=1.0">
+<script type="text/javascript" src="{{ static_url("js/jquery-2.1.3.min.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/bootstrap.js") }}"></script>
+<script type="text/javascript" src="{{ static_url("js/konfigurator.js") }}"></script>
+<link rel="stylesheet" href="{{ static_url("css/bootstrap.css") }}" type="text/css" />
+<link rel="stylesheet" href="{{ static_url("css/t3p.css") }}" type="text/css" />
+</head>
+<body onload="set_body_size()">
+  <div class="container" id="container">
+    <div class="row">
+      <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 col-xl-3" id="canvas-div">
+          <canvas id="myCanvas">
+            Ihr Browser unterstützt das HTML5 Canvas-Tag nicht.
+          </canvas>
+          
+          {% raw img %}
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 col-xl-9" id="data-div">
+        <div class="row">
+          <div id="heading" class="col-xs-5 col-xs-offset-1 col-sm-5 col-sm-offset-1 col-md-5 col-md-offset-1 col-lg-5 col-lg-offset-1 col-xl-5 col-xl-offset-1">
+            <h3>PICO-PROFILE T3PN<br>
+            Konfigurator</h3>
+          </div>
+          <div id="logo" class="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-xl-5">
+          </div>
+          <div id="msg-div" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-10 col-xl-offset-1">
+          <p id="step">{{ msg['step'] }}</p>
+          {{ msg['msg'] }}
+          </div>
+        
+          <div id="control-div" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-10 col-xl-offset-1">
+            {% if data.depths %}
+              {% include "adddepth_de.html" %}
+            {% else %}
+              {% include "maxdepth_de.html" %}
+            {% end %}
+          </div>
+          <div id="pdf-msg" style="visibility:hidden" class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xl-10 col-xl-offset-1">
+            PDF erstellt.
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix visible-xs-block visible-sm-block visible-md-block visible-lg-block visible-xl-block"></div>
+    </div>
+  </div>
+  <div id="cheating" style="display:none;">
+    <img height="20" id="img-probe" src="/t3pkonfigurator/static/probe.png">
+    <img height="10" id="img-spacer10" src="/t3pkonfigurator/static/spacer10.png">
+    <img height="30" id="img-spacer30" src="/t3pkonfigurator/static/spacer30.png">
+    <img height="80" id="img-spacer80" src="/t3pkonfigurator/static/spacer80.png">
+    <img id="tubeimg-bottom" src="/t3pkonfigurator/static/PROFILE_bottom.png">
+    <img id="tubeimg-top" src="/t3pkonfigurator/static/PROFILE_top.png">
+    <img id="tubeimg-100" src="/t3pkonfigurator/static/PROFILE_leer_100.png">
+    <img id="background" src="/t3pkonfigurator/static/background.png">
+  </div>
+</body>
+</html>

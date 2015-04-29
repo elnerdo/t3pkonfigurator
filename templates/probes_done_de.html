@@ -1,0 +1,67 @@
+<form method="post" action="/t3pkonfigurator/de" class="form-horizontal" id="final_form">
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Ihre Messpunkte:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    {% for n, x in enumerate(data.depths) %}
+      {{n+1}}. {{ x }}cm<br>
+    {% end %}
+</div>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Rohrlänge:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ data.configuration.tube }}cm</div>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Bodenabstand:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ data.configuration.offset }}cm</div><br>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Verbaute Teile:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+{% for part in data.configuration.parts %}
+   {{ data.configuration.parts[part] }}x {{ part }}<br>
+{% end %}
+</div>
+</div>
+<div class="form-group">
+<label for="connector" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Anschluss: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<select id="connector" name="connector" required class="form-control">
+<option value="">Bitte auswählen</option>
+<option value="IMP-BUS">IMP-BUS</option>
+<option value="SDI-12">SDI-12</option>
+<option value="RS-485">RS-485</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label for="cable" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Kabellänge: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<select id="cable" name="cable" required class="form-control">
+<option value="">Bitte auswählen</option>
+<!-- dont offer 2m cable is empty space is bigger than 100cm -->
+{% if not data.configuration.depths[-1] > 100 %}
+<option value="2m">2m</option>
+{% end %}
+<option value="5m">5m</option>
+<option value="10m">10m</option>
+<option value="Spezial">Andere (auf Anfrage)</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label for="amount" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Stückzahl: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+<input id="amount" name="amount" type="text" required pattern="/[0-9]+/" class="form-control">
+</div>
+</div>
+</div>
+<div style="visibility:hidden;height:0;"id="config">{config}</div>
+<div id="control-btns">
+<input type="hidden" name="create_pdf" value="1">
+<input type="hidden" name="depths" value="{{ data.depths }}">
+<input type="hidden" name="tube" value="{{ data.configuration.tube }}">
+<input type="hidden" name="offset" value="{{ data.configuration.offset }}">
+<input type="hidden" name="summary" value="{{ data.configuration.depths }}">
+<input type="hidden" name="configuration" value="{{ data.configuration.order }}">
+</form>
