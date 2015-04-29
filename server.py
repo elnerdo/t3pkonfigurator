@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-import os, time
+import os
 import logging
 import tornado.ioloop
 import tornado.web

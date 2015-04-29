@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 class ConfigurationGenerator(object):
 
     def __init__(self, t3p):
@@ -26,7 +27,7 @@ class ConfigurationGenerator(object):
         self.tube = self.calc_tube()
         self.spaces = self.calc_spaces()
         self.spacers = self.calc_spacers()
-        self.order = self.calc_order()       
+        self.order = self.calc_order()
         self.totalspaceused = self.calc_total_space_used()
         self.check_extra_spacers_bottom()
         self.parts = self.calc_parts()
@@ -38,7 +39,8 @@ class ConfigurationGenerator(object):
         i = 0
         if not len(self.depths):
             return 0
-        while self.tubelengths[i] - int(max(self.depths)) - self.plug - (self.probelength / 2) >= self.min_offset: 
+        while (self.tubelengths[i] - int(max(self.depths)) - self.plug -
+                (self.probelength / 2) >= self.min_offset):
             tube = self.tubelengths[i]
             if i == len(self.tubelengths) - 1:
                 break
@@ -80,16 +82,16 @@ class ConfigurationGenerator(object):
 
     def check_extra_spacers_bottom(self):
         freespace = self.tube - self.totalspaceused
-        currentoffset = freespace - int(min(self.depths) - (self.probelength / 2))
+        offset = freespace - int(min(self.depths) - (self.probelength / 2))
         i = 0
-        while currentoffset > self.max_offset:
-            if currentoffset - self.spacerlengths[i] >= self.min_offset:
-                currentoffset -= self.spacerlengths[i]
+        while offset > self.max_offset:
+            if offset - self.spacerlengths[i] >= self.min_offset:
+                offset -= self.spacerlengths[i]
                 spacer = 'spacer{0}'.format(self.spacerlengths[i])
-                self.order.insert(0,spacer)
+                self.order.insert(0, spacer)
             else:
                 i += 1
-        self.offset = currentoffset
+        self.offset = offset
 
     def spacer_probe_order(self):
         for i in self.spaces:

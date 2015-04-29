@@ -20,14 +20,14 @@ class MainHandler(tornado.web.RequestHandler):
         self.lang = lang
         self.templates = {"de": "templates/main_de.html",
                           "en": "templates/main_en.html"}
-        self.myrequests = ['add_probe', 'rm_probe', 'probes_done', 'depths', 'create_pdf',
-                           'amount', 'cable', 'connector']
+        self.myrequests = ['add_probe', 'rm_probe', 'probes_done', 'depths',
+                           'create_pdf', 'amount', 'cable', 'connector']
         self.request_dict = self._create_request_dict()
         if self.lang == "de":
             self.messages = MessagesDE()
         elif self.lang == "en":
             self.messages = MessagesEN()
-        else: #should never happen
+        else:  # should never happen
             self.messages = MessagesEN()
 
     def _create_request_dict(self):
@@ -37,21 +37,20 @@ class MainHandler(tornado.web.RequestHandler):
         return rqdict
 
     def get(self):
-        data = T3PKonfigurator(self.request_dict)
+        data = T3PKonfigurator(self.request_dict, self.lang)
         data.create_configuration()
         conf = {'tube': data.configuration.tube,
                 'depths': data.configuration.depths,
                 'order': data.configuration.order}
         ib = ImageBuilder()
         img = ib.build(conf['order'], conf['tube'], conf['depths'])
-        
+
         self.render(self.templates[self.lang],
                     msg=self.messages.initial_message,
                     data=data, img=img)
 
     def post(self):
-        print self.request_dict
-        data = T3PKonfigurator(self.request_dict)
+        data = T3PKonfigurator(self.request_dict, self.lang)
         data.create_configuration()
         conf = {'tube': data.configuration.tube,
                 'depths': data.configuration.depths,
@@ -68,8 +67,10 @@ class MainHandler(tornado.web.RequestHandler):
             pdf = data.create_pdf()
             with open(pdf, 'r') as f:
                 self.write(f.read())
-                self.set_header("Content-Type", 'application/pdf; charset="utf-8"')
-                self.set_header("Content-Disposition", "attachment; filename=" + pdf)
+                self.set_header("Content-Type",
+                                'application/pdf; charset="utf-8"')
+                self.set_header("Content-Disposition",
+                                "attachment; filename=" + pdf)
             os.remove(pdf)
 
         msg = self.set_message(data)
@@ -90,7 +91,8 @@ class MainHandler(tornado.web.RequestHandler):
 
 class T3PKonfigurator(object):
 
-    def __init__(self, data):
+    def __init__(self, data, lang):
+        self.lang = lang
         self.tubelengths = [300, 200, 100]
         self.plug = 10
         self.min_offset = 10
@@ -98,7 +100,8 @@ class T3PKonfigurator(object):
         self.reserved_space = self.plug + self.min_offset
         self.probelength = 20
         self.spacerlengths = [80, 30, 10]
-        self.maxdepth = max(self.tubelengths) - self.reserved_space - (self.probelength / 2)
+        self.maxdepth = (max(self.tubelengths) - self.reserved_space -
+                        (self.probelength / 2))
         self.depths = self.get_depths(data)
         self.possible_depths = self.get_possible_depths(data)
         self.finished = self.finish(data)
@@ -107,25 +110,25 @@ class T3PKonfigurator(object):
         self.connector = data['connector']
         self.probes_done = False
 
-
     def finish(self, data):
-        if data['probes_done']:          
-            self.depths = [ item.encode('ascii') for item in ast.literal_eval(data['probes_done']) ]
+        if data['probes_done']:
+            self.depths = self.encoding_helper(data['probes_done'])
             return True
         return False
 
+    def encoding_helper(self, data):
+        return [item.encode('ascii') for item in ast.literal_eval(data)]
 
     def create_configuration(self):
         cg = ConfigurationGenerator(self)
         self.configuration = cg.create_configuration()
 
-
     def create_pdf(self):
         self.configuration.amount = self.amount
         self.configuration.cable = self.cable
         self.configuration.connector = self.connector
-        parts = self.calc_parts( self.configuration.order)
-        pdfgen = PDFGenerator(self.configuration)
+        parts = self.calc_parts(self.configuration.order)
+        pdfgen = PDFGenerator(self.configuration, self.lang)
         pdf = pdfgen.build()
         return pdf
 
@@ -133,21 +136,24 @@ class T3PKonfigurator(object):
         if not data['depths']:
             depths = []
         else:
-            depths = [ item.encode('ascii') for item in ast.literal_eval(data['depths']) ]
+            depths = self.encoding_helper(data['depths'])
         if data['add_probe']:
             depths.append(data['add_probe'].encode('ascii'))
         if data['rm_probe']:
             del depths[-1]
         return depths
 
-
     def get_possible_depths(self, data):
         possible_depths = []
         if not len(self.depths):
             return possible_depths
         i = 0
-        while int(self.depths[-1]) - self.probelength - (i * min(self.spacerlengths)) >= 10:
-            possible_depths.append(int(self.depths[-1]) - self.probelength - (i * min(self.spacerlengths)))
+        while (int(self.depths[-1]) - self.probelength -
+                (i * min(self.spacerlengths)) >= 10):
+            possible_depths.append(
+                int(self.depths[-1]) - self.probelength -
+                (i * min(self.spacerlengths))
+                )
             i += 1
         return possible_depths
 
