@@ -42,7 +42,7 @@ label {
 }
 
 #msg-div, #pdf-msg {
-    background-color: #eee;
+    background-color: white;
     font-weight: bold;
     color: #6697c7;
     line-height: 2em;
