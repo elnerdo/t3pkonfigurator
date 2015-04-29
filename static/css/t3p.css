@@ -1,8 +1,6 @@
-#image-div300, #image-div200, #image-div100, #myCanvas{
-    border-radius: 50px;
-    border: 4px solid green;
+#myCanvas{
+    border: 4px solid rgb(0, 106, 179);
 }
-
 
 #container {
     padding-top: 2%;
@@ -17,55 +15,80 @@ body {
 }
 
 input[type=text], select {
-    color: #547491 !important;
+    color: #6697c7 !important;
 }
 
 label {
     text-align: left !important;
+    font-size: 1.2em;
 }
 
 #additional-data-div, #summary-div, #control-div {
     font-weight: bold;
-    color: #547491;
+    color: #6697c7;
+    margin-top: 2%;
+    line-height: 1.5em;
+    padding: 15px;
+}
+
+#control-div .row {
+    margin-bottom: 15px;
 }
 
 #control-div {
-    background-color: rgba(238,238,238,0.5) !important;
+    background-color: #eee;/*rgba(238,238,238,1) !important;*/
+    padding: 15px;
+    border-radius: 10px;
 }
 
-#msg-div {
-   background-color: rgba(223, 240, 216, 0.5);
+#msg-div, #pdf-msg {
+    background-color: #eee;
+    font-weight: bold;
+    color: #6697c7;
+    line-height: 2em;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#pdf-msg {
     margin-top: 2%;
+    text-align: center;
 }
 
 #data-div {
-    border-radius: 5%;
-    border: 4px solid green;
+    border: 4px solid rgb(0, 106, 179);
+    background-color: rgba(0,106,179, 0.4) !important;
+    padding: 15px;
 }
 
-#data-div::after {
-    /* this ain't good yet... */
-    background-image: url('/t3pkonfigurator/static/IMKO_impuls.png');
-    background-color: rgb(0, 106, 179);
-    background-size: contain;
+#heading h3 {
+    font-weight: bold !important;
+    color: #006ab3;
+}
+
+#logo {
+    padding: 10%;
+    background-image: url('/t3pkonfigurator/static/logo.png');
+    background-size: 50% 50%;
     background-repeat: no-repeat;
-    background-position: center center;
-    content: "";
-    opacity: 0.4;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;
-    border-radius: 4%; 
+    background-position: top right;
+    color: transparent;
 }
 
-#too-small {
-    background-color: #eee;
-    padding: 5%;
-    border-radius: 10%;
-    border: 4px solid green;
+#step {
+    float: left;
+    height: 40px;
+    width: 40px;
+    padding: 9px 10px 10px 12px;
+    border-radius: 20px;
+    border: 2px solid #006ab3;
+    line-height: 1em;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.big {
+    font-size: 1.2em;
 }
 
 .missing-required {

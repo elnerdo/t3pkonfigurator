@@ -1,27 +1,31 @@
 <form method="post" action="/t3pkonfigurator/en" class="form-horizontal" id="final_form">
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-  Your measuring points:<br>
-  <ol>
-    {% for x in data.depths %}
-      <li>{{ x }}cm</li>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Your measuring points:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+    {% for n, x in enumerate(data.depths) %}
+      {{n+1}}. {{ x }}cm<br>
     {% end %}
-  </ol>
 </div>
-
-<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">Tubelength:</div>
-<div class="col-xs-6 col-sm-10 col-md-10 col-lg-10 col-xl-10">{{ data.configuration.tube }}cm</div>
-<div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 col-xl-2">Clearance:</div>
-<div class="col-xs-6 col-sm-10 col-md-10 col-lg-10 col-xl-10">{{ data.configuration.offset }}cm</div><br>
-
-<div class="col-xs-12 col-sm-12 co-md-12 col-lg-12 col-xl-12">Installed parts:</div>
-<ul>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Tubelength:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ data.configuration.tube }}cm</div>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Clearance:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">{{ data.configuration.offset }}cm</div>
+</div>
+<div class="row">
+<div class="big col-xs-6 col-sm-6 co-md-6 col-lg-6 col-xl-6">Installed parts:</div>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
 {% for part in data.configuration.parts %}
-   </li>{{ data.configuration.parts[part] }}x {{ part }}</li><br>
+   {{ data.configuration.parts[part] }}x {{ part }}<br>
 {% end %}
-</ul>
+</div>
+</div>
 <div class="form-group">
-<label for="connector" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">Connector: </label>
-<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+<label for="connector" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Connector: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
 <select id="connector" name="connector" required class="form-control">
 <option value="">Please select</option>
 <option value="IMP-BUS">IMP-BUS</option>
@@ -31,8 +35,8 @@
 </div>
 </div>
 <div class="form-group">
-<label for="cable" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">Cablelength: </label>
-<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+<label for="cable" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Cablelength: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
 <select id="cable" name="cable" required class="form-control">
 <option value="">Please select</option>
 <!-- dont offer 2m cable is empty space is bigger than 100cm -->
@@ -46,8 +50,8 @@
 </div>
 </div>
 <div class="form-group">
-<label for="amount" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">Ammount: </label>
-<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+<label for="amount" class="control-label col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">Ammount: </label>
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
 <input id="amount" name="amount" type="text" required pattern="/[0-9]+/" class="form-control">
 </div>
 </div>

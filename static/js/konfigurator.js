@@ -9,7 +9,7 @@ function check_form(requiredValues) {
     return;
 }
 
-function submit_form(form) {
+function submit_form(form, event) {
     var inputs = $(form + ' :input');
     var valid = true;
     var valid_pattern = true;
@@ -34,6 +34,9 @@ function submit_form(form) {
     }
     if (valid && valid_pattern) {
         $(form).submit();
+        if (form=='#final_form') {
+            $('#pdf-msg').css('visibility', 'visible');
+        }
     }
     return;
 }
@@ -150,6 +153,9 @@ function set_background_size() {
     var h = $(window).height() * 0.8;
     $('#myCanvas').attr('width', w);
     $('#myCanvas').attr('height', h);
+    var ratio = 10 * h/w + 'px';
+    $('#myCanvas').css('border-radius', ratio);
+    $('#data-div').css('border-radius', ratio);
     var h2 = h + 8;
     $('#data-div').css('min-height', h2 + 'px');
 }
