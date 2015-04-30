@@ -15,7 +15,7 @@ class MessagesDE(object):
             "step": "2"}
         self.max_elements_message = {
             "msg": "Es können keine weiteren Elemente hinzugefügt werden. \
-                    Schließen Sie die Konfiguration durch einen klick auf \
+                    Schließen Sie die Konfiguration durch einen Klick auf \
                     Fertig ab oder überarbeiten Sie die Konfiguration.",
             "step": "2"}
         self.finish = {
