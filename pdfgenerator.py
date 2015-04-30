@@ -199,14 +199,20 @@ configuration:'}
         txt = {
             'de': 'PDF via Email an info@imko.de Betreff: T3P Konfiguration.',
             'en': 'PDF via Email to info@imko.de Subject: T3P Configuration'}
+        txt2 = {
+            'de': 'Fügen Sie Ihre PICO-PROFILE T3PN Konfiguration der E-Mail \
+bei.',
+            'en': 'Attach your PICO-PROFILE T3PN configuration to the E-Mail.'
+        }
         canvas.drawString(self.center, 100, txt[self.lang])
+        canvas.drawString(self.center, 75, txt2[self.lang])
         canvas.rect(
-            self._rect_x(self.center), self._rect_y(100),
-            self.rect_width, self.rect_height)
+            self._rect_x(self.center), self._rect_y(75),
+            self.rect_width, self.rect_height*2)
         mailto = 'mailto:info@imko.de?subject=T3p-Konfiguration'
-        canvas.linkURL(mailto, (self._rect_x(self.center), self._rect_y(100),
+        canvas.linkURL(mailto, (self._rect_x(self.center), self._rect_y(75),
                        self._rect_x(self.center) + self.rect_width,
-                       self._rect_y(100) + self.rect_height))
+                       self._rect_y(75) + self.rect_height*2))
         canvas.line(248, 97, 330, 97)
         self.y -= self.y_decrease
 
